@@ -19,18 +19,11 @@ public class ChatController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> GenerateResponseAsync([FromBody] ChatRequest request)
     {
-        var payload = new
-        {
-            model = "gpt-3.5-turbo",
-            stream = true,
-            messages = request.inputMsg,
-            temperature = 0.7
-        };
 
         using (var client = new HttpClient())
         using (var requestMessage = new HttpRequestMessage(HttpMethod.Post, _apiUrl))
         {
-            requestMessage.Content = new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json");
+            requestMessage.Content = new StringContent(request.inputText, Encoding.UTF8, "application/json");
 
             using (var response = await client.SendAsync(requestMessage, HttpCompletionOption.ResponseHeadersRead))
             {

@@ -23,7 +23,7 @@ public class ChatController : ControllerBase
         using (var client = new HttpClient())
         using (var requestMessage = new HttpRequestMessage(HttpMethod.Post, _apiUrl))
         {
-            requestMessage.Content = new StringContent(request.inputText, Encoding.UTF8, "application/json");
+            requestMessage.Content = new StringContent(request.inputMsg, Encoding.UTF8, "application/json");
 
             using (var response = await client.SendAsync(requestMessage, HttpCompletionOption.ResponseHeadersRead))
             {
